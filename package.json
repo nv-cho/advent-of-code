@@ -1,0 +1,12 @@
+{
+  "name": "advent-of-code-2022",
+  "version": "1.0.0",
+  "description": "advent of code challenges and my solutions to those",
+  "main": "index.js",
+  "author": "Ignacio Presas",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
