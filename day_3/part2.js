@@ -5,38 +5,27 @@ const inputText = fs.readFileSync("input.txt", "utf8");
 const inputLines = inputText.split("\r").map(lines => lines.trim());
 
 /** @desc Create array of characters arrays */
-const charactersArrays = [];
+const linesArrays = [];
 
-inputLines.forEach(line => {
-  const charactersArray = [...line];
-  charactersArrays.push(charactersArray);
-});
+for (let i = 0; i < inputLines.length; i += 3) {
+  const firstLine = inputLines[i];
+  const secondLine = inputLines[i + 1];
+  const thirdLine = inputLines[i + 2];
 
-/** @desc Divide characters arrays into two and store in finalData array */
-const finalData = [];
+  linesArrays.push([firstLine, secondLine, thirdLine]);
+}
 
-charactersArrays.forEach(charactersArray => {
-  const firstHalf = charactersArray.slice(0, charactersArray.length / 2);
-  const secondHalf = charactersArray.slice(charactersArray.length / 2);
-  finalData.push([firstHalf, secondHalf]);
-});
-
-/** @desc Compare characters in each array and store the matching ones */
+/** Iterate over the lines looking for a common character */
 const repeatedCharacters = [];
 
-finalData.forEach(halfArrays => {
-  const firstHalf = halfArrays[0];
-  const secondHalf = halfArrays[1];
+linesArrays.forEach(linesArray => {
+  const firstLine = new Set(linesArray[0]);
+  const secondLine = new Set(linesArray[1]);
+  const thirdLine = new Set(linesArray[2]);
 
-  const boxCharacters = new Set();
-
-  firstHalf.forEach(characterA => {
-    if (secondHalf.includes(characterA)) {
-      boxCharacters.add(characterA);
-    }
+  [...firstLine].filter(x => {
+    secondLine.has(x) && thirdLine.has(x) && repeatedCharacters.push(x);
   });
-
-  boxCharacters.forEach(character => repeatedCharacters.push(character));
 });
 
 /** @desc Separate the uppercase letters from the lowercase and makes the final sum*/
@@ -65,5 +54,3 @@ for (let i = 0; i < 26; i++) {
     if (uppercaseCharacter === character) sum += i + 27;
   });
 }
-
-console.log(sum);
